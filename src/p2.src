@@ -1,0 +1,52 @@
+## --------
+## SOURCE
+## --------
+
+## R0 : Entree Std
+## R1 : Sortie Std
+## R2 : Erreur
+## R3 : 
+## R4 : 
+## R5 :
+## R6 :
+## R7 :	
+
+## S0 : STATUS
+
+## C0 : CONSTANTE
+## C1 : 
+## C2 : 
+## C3 : 
+## C4 : 
+## C5 : 
+## C6 : 
+## C7 : 
+
+			BEGIN
+$DEBUT
+			RESET	R
+			RESET	S
+$DOSSIER
+			SET 			R1	DOSSIER
+			PRINT
+			READ
+			CALL 			VERIF_DOSSIER	R0
+			JMP_FALSE 		DOSSIER
+$OPERATION
+			SET 			R1	OPERATION
+			PRINT
+			READ
+			CALL 			VERIF_OPER		R0
+			JMP_FALSE 		OPERATION
+			TEST 			C0
+			JMP_FALSE 		SUITE
+$BOBINE
+			SET 			R1	BOBINE
+			PRINT
+			READ
+			CALL 			VERIF_BOBINE	R0
+			JMP_FALSE 		BOBINE
+$SUITE
+			CALL MAJ
+			GOTO DEBUT
+			END

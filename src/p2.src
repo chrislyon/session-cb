@@ -22,6 +22,19 @@
 ## C6 : 
 ## C7 : 
 
+## BEGIN 	=> Peut lancer certaines initialisations
+## END	 	=> Arrêt de la VM
+## RESET	=> RAZ Status S / Registre R
+## SET		=> Affectation Registre
+## PRINT	=> Envoi R1 sur la sortie Std
+## READ		=> Recupere dans R0 ce qui est dans l'entree std
+## FUNC		=> Appel de function retour dans R ou S
+## CALL		=> Appel de procédure
+## JMP_FALSE=> saut etiquette si S0 est faux	
+## JMP_TRUE	=> saut etiquette si S0 est  vrai
+## GOTO		=> saut etiquette
+
+
 			BEGIN
 $DEBUT
 			RESET	R
@@ -30,13 +43,13 @@ $DOSSIER
 			SET 			R1	DOSSIER
 			PRINT
 			READ
-			CALL 			VERIF_DOSSIER	R0
+			FUNC 			VERIF_DOSSIER	R0
 			JMP_FALSE 		DOSSIER
 $OPERATION
 			SET 			R1	OPERATION
 			PRINT
 			READ
-			CALL 			VERIF_OPER		R0
+			FUNC 			VERIF_OPER		R0
 			JMP_FALSE 		OPERATION
 			TEST 			C0
 			JMP_FALSE 		SUITE
@@ -44,7 +57,7 @@ $BOBINE
 			SET 			R1	BOBINE
 			PRINT
 			READ
-			CALL 			VERIF_BOBINE	R0
+			FUNC 			VERIF_BOBINE	R0
 			JMP_FALSE 		BOBINE
 $SUITE
 			CALL MAJ

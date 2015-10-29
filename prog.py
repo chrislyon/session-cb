@@ -21,17 +21,34 @@ class prog(object):
 
 	def __init__(self, nom):
 		self.name = nom
+		self.fic_src = ""
 		self.lignes = []
 		self.cpt_lig = 0
 		self.err = 0
 
 		self.etiq = []
 
+	## Chargement a partir d'un source
+	def load(self, fichier):
+		self.fic_src = fichier
+		f = open(fichier)
+		for l in f.readlines():
+			l = l.strip()
+			if l.startswith('#'):
+				continue
+			elif len(l) == 0:
+				continue
+			else:
+				w = l.split()
+				self.add_l(' '.join(w))
+
+	## Ajout d'une ligne
 	def add_l(self, texte):
 		self.cpt_lig += 1
 		l = ligne( self.cpt_lig, texte)
 		self.lignes.append(l)
 
+	## Verification du source
 	def check(self):
 		## Debut / Fin
 		if self.lignes[0].texte != "BEGIN":
@@ -72,6 +89,7 @@ class prog(object):
 				else:
 					l.err = prog.ERR_INSTR_INEX
 
+	## Affichage du prog
 	def pr(self):
 		print( "PROGRAMME : %s " % self.name )
 		for l in self.lignes:
@@ -89,26 +107,14 @@ class prog(object):
 ## -----------------
 ## Lecture du source
 ## -----------------
-def lire(fichier):
+def test(fichier):
 	prg = prog( "TEST1" )
-	f = open(fichier)
-	for l in f.readlines():
-		l = l.strip()
-		if l.startswith('#'):
-			continue
-		elif len(l) == 0:
-			continue
-		else:
-			w = l.split()
-			prg.add_l(' '.join(w))
-	return prg
+	prg.load(fichier)
+	prg.check()
+	prg.pr()
 			
 ## -----
 ## MAIN
 ## -----
 if __name__ == '__main__':
-	p = lire(sys.argv[1])
-	print( p )
-	p.check()
-	p.pr()
-
+	test(sys.argv[1])
